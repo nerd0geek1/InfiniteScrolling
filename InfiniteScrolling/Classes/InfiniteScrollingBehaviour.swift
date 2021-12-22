@@ -7,7 +7,7 @@
 //
 import UIKit
 
-public protocol InfiniteScrollingBehaviourDelegate: class {
+public protocol InfiniteScrollingBehaviourDelegate: AnyObject {
     func configuredCell(forItemAtIndexPath indexPath: IndexPath, originalIndex: Int, andData data: InfiniteScollingData, forInfiniteScrollingBehaviour behaviour: InfiniteScrollingBehaviour) -> UICollectionViewCell
     func didSelectItem(atIndexPath indexPath: IndexPath, originalIndex: Int, andData data: InfiniteScollingData, inInfiniteScrollingBehaviour behaviour: InfiniteScrollingBehaviour) -> Void
     func didEndScrolling(inInfiniteScrollingBehaviour behaviour: InfiniteScrollingBehaviour)
@@ -35,7 +35,7 @@ public enum LayoutType {
 
 public struct CollectionViewConfiguration {
     public let scrollingDirection: UICollectionView.ScrollDirection
-    public var layoutType: LayoutType
+    public let layoutType: LayoutType
     public static let `default`
         = CollectionViewConfiguration(layoutType: .numberOfCellOnScreen(5),
                                       scrollingDirection: .horizontal)
@@ -105,10 +105,10 @@ public class InfiniteScrollingBehaviour: NSObject {
 
     private func calculateCellWidth() {
         switch self.collectionConfiguration.layoutType {
-        case .fixedSize(let sizeValue, let padding):
+        case let .fixedSize(sizeValue, padding):
             self.cellSize = sizeValue
             self.padding = padding
-        case .numberOfCellOnScreen(let numberOfCellsOnScreen):
+        case let .numberOfCellOnScreen(numberOfCellsOnScreen):
             self.cellSize = (self.collectionViewBoundsValue / numberOfCellsOnScreen.cgFloat)
             self.padding = 0
         }
@@ -258,7 +258,7 @@ extension InfiniteScrollingBehaviour: UICollectionViewDelegateFlowLayout {
 
     public func scrollViewDidEndDragging(_ scrollView: UIScrollView,
                                          willDecelerate decelerate: Bool) {
-        if decelerate == false {
+        if !decelerate {
             self.delegate?.didEndScrolling(inInfiniteScrollingBehaviour: self)
         }
     }
