@@ -46,15 +46,15 @@ public struct CollectionViewConfiguration {
 }
 
 public class InfiniteScrollingBehaviour: NSObject {
-    fileprivate var cellSize: CGFloat = 0.0
-    fileprivate var padding: CGFloat = 0.0
-    fileprivate var numberOfBoundaryElements = 0
-    fileprivate(set) public weak var collectionView: UICollectionView!
-    fileprivate(set) public weak var delegate: InfiniteScrollingBehaviourDelegate?
-    fileprivate(set) public var dataSet: [InfiniteScollingData]
-    fileprivate(set) public var dataSetWithBoundary: [InfiniteScollingData] = []
+    private var cellSize: CGFloat = 0.0
+    private var padding: CGFloat = 0.0
+    private var numberOfBoundaryElements = 0
+    private(set) public weak var collectionView: UICollectionView!
+    private(set) public weak var delegate: InfiniteScrollingBehaviourDelegate?
+    private(set) public var dataSet: [InfiniteScollingData]
+    private(set) public var dataSetWithBoundary: [InfiniteScollingData] = []
     
-    fileprivate var collectionViewBoundsValue: CGFloat {
+    private var collectionViewBoundsValue: CGFloat {
         get {
             switch collectionConfiguration.scrollingDirection {
             case .horizontal:
@@ -65,7 +65,7 @@ public class InfiniteScrollingBehaviour: NSObject {
         }
     }
     
-    fileprivate var scrollViewContentSizeValue: CGFloat {
+    private var scrollViewContentSizeValue: CGFloat {
         get {
             switch collectionConfiguration.scrollingDirection {
             case .horizontal:
@@ -76,7 +76,7 @@ public class InfiniteScrollingBehaviour: NSObject {
         }
     }
     
-    fileprivate(set) public var collectionConfiguration: CollectionViewConfiguration
+    private(set) public var collectionConfiguration: CollectionViewConfiguration
     
     public init(withCollectionView collectionView: UICollectionView, andData dataSet: [InfiniteScollingData], delegate: InfiniteScrollingBehaviourDelegate, configuration: CollectionViewConfiguration = .default) {
         self.collectionView = collectionView
